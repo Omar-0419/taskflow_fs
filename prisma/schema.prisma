@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum nameStatus {
+  DONE
+  TO_DO
+}
+
+model tasks {
+  id          String     @id @default(uuid()) @db.Uuid
+  name        String
+  description String?
+  status      nameStatus @default(TO_DO)
+  isActive    Boolean    @default(true)
+  createAt    DateTime   @default(now())
+}
+
